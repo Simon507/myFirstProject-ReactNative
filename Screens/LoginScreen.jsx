@@ -10,82 +10,61 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 
 export default function LoginScreen() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [focused, setFocused] = useState();
 
   const nameHandler = text => setName(text);
   const passwordHandler = text => setPassword(text);
 
+  const onFocus = () => {
+    setFocused(true);
+  };
+  const onBlur = () => {
+    setFocused(false);
+  };
+  const stylesForInput = {
+    style: focused ? styles.inputOnFocus : styles.inputOnBlur,
+  };
+
   const onLogin = () => {
-    console.log('Credentials', `${name} + ${password}`);
+    console.log('Введено', `${name} + ${password}`);
   };
 
   return (
-    <View style={styles.mainBlock}>
-      <View style={styles.enterBlock}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.loginBlock}>
         <Text style={styles.title}>Войти</Text>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.container}>
-            <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
-              <TextInput
-                value={name}
-                onChangeText={nameHandler}
-                placeholder="Username"
-                style={styles.input}
-              />
-
-              <TextInput
-                value={password}
-                onChangeText={passwordHandler}
-                placeholder="Password"
-                secureTextEntry={true}
-                style={styles.input}
-              />
-            </KeyboardAvoidingView>
-            <TouchableOpacity style={styles.button} onPress={onLogin}>
-              <Text style={styles.buttonTxt}>LOGIN</Text>
-            </TouchableOpacity>
-          </View>
-        </TouchableWithoutFeedback>
-
-        <Text style={styles.noAccTxt}>Нет аккаунта? Зарегистрироваться</Text>
+        <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+          <TextInput
+            value={name}
+            onChangeText={nameHandler}
+            placeholder="Username"
+            {...stylesForInput}
+            onFocus={onFocus}
+            onBlur={onBlur}
+          />
+        </KeyboardAvoidingView>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  mainBlock: {
-    flex: 1,
-    // backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    // paddingBottom: 30,
-  },
-  //   enterFieldBlock: { width: '100%' },
-  //   enterFieldBlock1: { width: '100%' },
-
-  container: { width: '100%' },
-
-  enterBlock: {
+  loginBlock: {
     paddingTop: 32,
+    paddingBottom: 144,
     paddingLeft: 16,
     paddingRight: 16,
     width: '100%',
-    // position: 'absolute',
-    flex: 0.6,
-    // top: 320,
-    // left: 0,
+    flex: 0.5,
     backgroundColor: '#F6F6F6',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    // backgroundColor: '#fff',
-    alignItems: 'center',
-    // justifyContent: 'flex-end',
-    // justifyContent: 'center',
   },
 
   title: {
@@ -97,16 +76,29 @@ const styles = StyleSheet.create({
     letterSpacing: 0.01,
     marginBottom: 33,
   },
-  input: {
-    width: '100%',
-    padding: 16,
+
+  inputOnFocus: {
+    // marginHorizontal: 20,
+    // fontSize: 20,
+    // borderRadius: 10,
+    // borderWidth: 1,
+    borderColor: '#430fdf',
+    // paddingHorizontal: 15,
+    // paddingVertical: 10,
+  },
+  inputOnBlur: {
+    marginHorizontal: 20,
+    fontSize: 20,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: 'black',
-    marginBottom: 16,
+    borderColor: '#0fb5df',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
   },
   button: {
     backgroundColor: '#FF6C00',
-
+    marginTop: 40,
+    marginBottom: 16,
     borderRadius: 100,
     alignItems: 'center',
 
