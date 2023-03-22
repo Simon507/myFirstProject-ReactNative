@@ -76,7 +76,7 @@ export default function LoginScreen() {
               secureTextEntry={true}
             />
             <TouchableOpacity style={styles.button} onPress={onLogin}>
-              <Text style={styles.buttonTxt}>LOGIN</Text>
+              <Text style={styles.buttonTxt}>ВХОД</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
           <View style={styles.noAcc}>

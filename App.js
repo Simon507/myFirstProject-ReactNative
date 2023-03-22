@@ -1,5 +1,5 @@
 // import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // import { AppLoading } from 'expo';
 
@@ -11,6 +11,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StyleSheet, Text, View, ImageBackground, Keyboard } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './Screens/LoginScreen';
+import RegistrationScreen from './Screens/RegistrationScreen';
 
 // const LoadFont = async () => {
 //   await Font.loadAsync({
@@ -32,7 +33,16 @@ import LoginScreen from './Screens/LoginScreen';
 // };
 
 export default function App() {
-  const [isReady, setIsReady] = useState(false);
+  // useEffect(() => {
+  //   const onOrientationChange = () => {
+  //     const widthScreen = Dimensions.get('window').width;
+  //     setDimensions(widthScreen);
+  //   };
+  //   Dimensions.addEventListener('change', onOrientationChange);
+  //   return () => {
+  //     Dimensions.removeEventListener('change', onOrientationChange);
+  //   };
+  // }, []);
 
   // if (!fontIsReady) {
   //   return (
@@ -67,7 +77,8 @@ export default function App() {
   return (
     <NavigationContainer style={styles.container} onLayout={onLayoutRootView}>
       <ImageBackground style={styles.image} source={require('./assets/images/bgImage.jpg')}>
-        <LoginScreen> </LoginScreen>
+        {/* <LoginScreen> </LoginScreen> */}
+        <RegistrationScreen> </RegistrationScreen>
       </ImageBackground>
     </NavigationContainer>
   );
