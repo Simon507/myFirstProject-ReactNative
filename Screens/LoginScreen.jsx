@@ -79,7 +79,10 @@ export default function LoginScreen() {
               <Text style={styles.buttonTxt}>LOGIN</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
-          <Text style={styles.noAccTxt}>Нет аккаунта? Зарегистрироваться</Text>
+          <View style={styles.noAcc}>
+            <Text style={styles.noAccTxt}>Нет аккаунта? &#8594;</Text>
+            <Text style={styles.noAccRegisterTxt}>Зарегистрироваться...</Text>
+          </View>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -131,18 +134,32 @@ const styles = StyleSheet.create({
   },
 
   buttonTxt: { color: '#fff' },
+
+  noAcc: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   noAccTxt: {
     fontFamily: 'Roboto',
     fontWeight: 400,
     fontSize: 16,
     lineHeight: 19,
-    textAlign: 'center',
-    color: '#1B4371',
+    // textAlign: 'center',
+    color: '#01050a',
     fontFamily: 'MerriweatherRegular',
   },
-  noAccTxt: {
-    textDecorationLine: 'underline',
-    textAlign: 'center',
+
+  noAccRegisterTxt: {
+    fontSize: 16,
+    color: '#1061c5',
     fontFamily: 'MerriweatherRegular',
+    textDecorationLine: 'underline',
+    // textDecorationLine: 'underline',
+    // textAlign: 'center',
+    // fontFamily: 'MerriweatherRegular',
   },
 });
