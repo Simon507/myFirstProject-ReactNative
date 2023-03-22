@@ -1,11 +1,71 @@
 // import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import React, { useState } from 'react';
+
+// import { AppLoading } from 'expo';
+
+import { useCallback } from 'react';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+// import * as Font from 'expo-font';
+
+import { StyleSheet, Text, View, ImageBackground, Keyboard } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './Screens/LoginScreen';
 
+// const LoadFont = async () => {
+//   await Font.loadAsync({
+//     AlkatraVariableFont: require('./assets/fonts/AlkatraVariableFont.ttf'),
+//   });
+// };
+
+// const loadFonts = async () => {
+//   await Font.loadAsync({
+//     crimsonTextRegular: require('./assets/fonts/crimsoncextregular.ttf'),
+//     crimsonTextBold: require('./assets/fonts/crimsontextbold.ttf'),
+//     get crimsonTextBold() {
+//       return this._crimsonTextBold;
+//     },
+//     set crimsonTextBold(value) {
+//       this._crimsonTextBold = value;
+//     },
+//   });
+// };
+
 export default function App() {
+  const [isReady, setIsReady] = useState(false);
+
+  // if (!fontIsReady) {
+  //   return (
+  //     <AppLoading
+  //       startAsync={LoadFont}
+  //       onFinish={() => {
+  //         setFontIsReady(true);
+  //       }}
+  //       onError={console.warn}
+  //     ></AppLoading>
+  //   );
+  // }
+
+  const [fontsLoaded] = useFonts({
+    MerriweatherRegular: require('./assets/fonts/MerriweatherRegular.ttf'),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  // if (!isReady) {
+  //   return <AppLoading startAsync={loadFonts} onFinish={() => setIsReady(true)} />;
+  // }
+
   return (
-    <NavigationContainer style={styles.container}>
+    <NavigationContainer style={styles.container} onLayout={onLayoutRootView}>
       <ImageBackground style={styles.image} source={require('./assets/images/bgImage.jpg')}>
         <LoginScreen> </LoginScreen>
       </ImageBackground>
