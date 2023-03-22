@@ -14,6 +14,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  ImageBackground,
+  ScrollView,
 } from 'react-native';
 
 // const LoadFont = async () => {
@@ -22,7 +24,7 @@ import {
 //   });
 // };
 
-export default function RegistrationScreen() {
+export default function RegistrationScreen({ navigation }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -57,58 +59,66 @@ export default function RegistrationScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.main}>
+      <ImageBackground style={styles.image} source={require('../assets/images/bgImage.jpg')}>
         <View style={styles.form}>
-          <Text style={styles.title}>Регистрация</Text>
-          <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
-            <TextInput
-              value={name}
-              onChangeText={nameHandler}
-              placeholder="Username"
-              style={{ ...styles.input, borderColor: focusedName ? '#430fdf' : '#0fb5df' }}
-              onFocus={() => setFocusedName(true)}
-              onBlur={() => setFocusedName(false)}
-            />
-            <TextInput
-              value={email}
-              onChangeText={emailHandler}
-              placeholder="E-mail"
-              style={{ ...styles.input, borderColor: focusedEmail ? '#430fdf' : '#0fb5df' }}
-              onFocus={() => setFocusedEmail(true)}
-              onBlur={() => setFocusedEmail(false)}
-            />
-            <TextInput
-              value={password}
-              onChangeText={passwordHandler}
-              placeholder="Password"
-              style={{ ...styles.input, borderColor: focusedPass ? '#430fdf' : '#0fb5df' }}
-              onFocus={() => setFocusedPass(true)}
-              onBlur={() => setFocusedPass(false)}
-              secureTextEntry={true}
-            />
-            <TouchableOpacity style={styles.button} onPress={onSubmit}>
-              <Text style={styles.buttonTxt}>Зарегистрироваться</Text>
-            </TouchableOpacity>
-          </KeyboardAvoidingView>
-          <View style={styles.noAcc}>
-            <Text style={styles.noAccTxt}>Уже есть аккаунт? &#8594;</Text>
-            <Text style={styles.noAccRegisterTxt}>Войти...</Text>
-          </View>
+          <ScrollView>
+            <Text style={styles.title}>Регистрация</Text>
+            <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+              <TextInput
+                value={name}
+                onChangeText={nameHandler}
+                placeholder="Username"
+                style={{ ...styles.input, borderColor: focusedName ? '#430fdf' : '#0fb5df' }}
+                onFocus={() => setFocusedName(true)}
+                onBlur={() => setFocusedName(false)}
+              />
+              <TextInput
+                value={email}
+                onChangeText={emailHandler}
+                placeholder="E-mail"
+                style={{ ...styles.input, borderColor: focusedEmail ? '#430fdf' : '#0fb5df' }}
+                onFocus={() => setFocusedEmail(true)}
+                onBlur={() => setFocusedEmail(false)}
+              />
+              <TextInput
+                value={password}
+                onChangeText={passwordHandler}
+                placeholder="Password"
+                style={{ ...styles.input, borderColor: focusedPass ? '#430fdf' : '#0fb5df' }}
+                onFocus={() => setFocusedPass(true)}
+                onBlur={() => setFocusedPass(false)}
+                secureTextEntry={true}
+              />
+              <TouchableOpacity style={styles.button} onPress={onSubmit}>
+                <Text style={styles.buttonTxt}>Зарегистрироваться</Text>
+              </TouchableOpacity>
+            </KeyboardAvoidingView>
+            <View style={styles.noAcc}>
+              <Text style={styles.noAccTxt}>Уже есть аккаунт? &#8594;</Text>
+              <Text
+                onPress={() => navigation.navigate('LoginScreen')}
+                style={styles.noAccRegisterTxt}
+              >
+                Войти
+              </Text>
+            </View>
+          </ScrollView>
         </View>
-      </View>
+      </ImageBackground>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  main: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', width: '100%' },
+  image: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', width: '100%' },
 
   form: {
-    paddingTop: 60,
-    paddingBottom: 144,
+    paddingVertical: 40,
+    // paddingTop: 32,
+    // paddingBottom: 100,
     paddingHorizontal: 30,
     width: '100%',
-    flex: 0.72,
+    flex: 0.65,
     backgroundColor: '#F6F6F6',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,

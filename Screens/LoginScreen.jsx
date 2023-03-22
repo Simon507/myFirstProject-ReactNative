@@ -14,6 +14,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  ImageBackground,
+  ScrollView,
 } from 'react-native';
 
 // const LoadFont = async () => {
@@ -22,7 +24,8 @@ import {
 //   });
 // };
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
+  // console.log('navigation', navigation);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [focusedName, setFocusedName] = useState(false);
@@ -54,50 +57,58 @@ export default function LoginScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.main}>
+      <ImageBackground style={styles.image} source={require('../assets/images/bgImage.jpg')}>
         <View style={styles.form}>
-          <Text style={styles.title}>Войти</Text>
-          <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
-            <TextInput
-              value={name}
-              onChangeText={nameHandler}
-              placeholder="Username"
-              style={{ ...styles.input, borderColor: focusedName ? '#430fdf' : '#0fb5df' }}
-              onFocus={() => setFocusedName(true)}
-              onBlur={() => setFocusedName(false)}
-            />
-            <TextInput
-              value={password}
-              onChangeText={passwordHandler}
-              placeholder="Password"
-              style={{ ...styles.input, borderColor: focusedPass ? '#430fdf' : '#0fb5df' }}
-              onFocus={() => setFocusedPass(true)}
-              onBlur={() => setFocusedPass(false)}
-              secureTextEntry={true}
-            />
-            <TouchableOpacity style={styles.button} onPress={onLogin}>
-              <Text style={styles.buttonTxt}>ВХОД</Text>
-            </TouchableOpacity>
-          </KeyboardAvoidingView>
-          <View style={styles.noAcc}>
-            <Text style={styles.noAccTxt}>Нет аккаунта? &#8594;</Text>
-            <Text style={styles.noAccRegisterTxt}>Зарегистрироваться...</Text>
-          </View>
+          <ScrollView>
+            <Text style={styles.title}>Вход в приложение</Text>
+            <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+              <TextInput
+                value={name}
+                onChangeText={nameHandler}
+                placeholder="Username"
+                style={{ ...styles.input, borderColor: focusedName ? '#430fdf' : '#0fb5df' }}
+                onFocus={() => setFocusedName(true)}
+                onBlur={() => setFocusedName(false)}
+              />
+              <TextInput
+                value={password}
+                onChangeText={passwordHandler}
+                placeholder="Password"
+                style={{ ...styles.input, borderColor: focusedPass ? '#430fdf' : '#0fb5df' }}
+                onFocus={() => setFocusedPass(true)}
+                onBlur={() => setFocusedPass(false)}
+                secureTextEntry={true}
+              />
+              <TouchableOpacity style={styles.button} onPress={onLogin}>
+                <Text style={styles.buttonTxt}>ВХОД</Text>
+              </TouchableOpacity>
+            </KeyboardAvoidingView>
+            <View style={styles.noAcc}>
+              <Text style={styles.noAccTxt}>Нет аккаунта? &#8594;</Text>
+              <Text
+                onPress={() => navigation.navigate('RegistrationScreen')}
+                style={styles.noAccRegisterTxt}
+              >
+                Зарегистрироваться
+              </Text>
+            </View>
+          </ScrollView>
         </View>
-      </View>
+      </ImageBackground>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  main: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', width: '100%' },
+  image: { flex: 1, alignItems: 'center', justifyContent: 'flex-end', width: '100%' },
 
   form: {
-    paddingTop: 32,
-    paddingBottom: 144,
+    paddingVertical: 40,
+    // paddingTop: 32,
+    // paddingBottom: 100,
     paddingHorizontal: 30,
     width: '100%',
-    flex: 0.42,
+    flex: 0.6,
     backgroundColor: '#F6F6F6',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
@@ -138,7 +149,7 @@ const styles = StyleSheet.create({
   noAcc: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 15,
+    gap: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
