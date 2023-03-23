@@ -43,6 +43,7 @@ export default function RegistrationScreen({ navigation }) {
   const onSubmit = () => {
     Keyboard.dismiss();
     console.log('Введено', `${name} + ${email} + ${password}`);
+    navigation.navigate('PostScreen');
   };
 
   // if (!fontIsReady) {

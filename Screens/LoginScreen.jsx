@@ -18,22 +18,11 @@ import {
   ScrollView,
 } from 'react-native';
 
-// const LoadFont = async () => {
-//   await Font.loadAsync({
-//     AlkatraVariableFont: require('../assets/fonts/AlkatraVariableFont.ttf'),
-//   });
-// };
-
 export default function LoginScreen({ navigation }) {
-  // console.log('navigation', navigation);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [focusedName, setFocusedName] = useState(false);
   const [focusedPass, setFocusedPass] = useState(false);
-
-  // const [fontIsReady, setFontIsReady] = useState(false);
-
-  // haksdhjkah
 
   const nameHandler = text => setName(text);
   const passwordHandler = text => setPassword(text);
@@ -42,18 +31,6 @@ export default function LoginScreen({ navigation }) {
     Keyboard.dismiss();
     console.log('Введено', `${name} + ${password}`);
   };
-
-  // if (!fontIsReady) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={LoadFont}
-  //       onFinish={() => {
-  //         setFontIsReady(true);
-  //       }}
-  //       onError={console.warn}
-  //     ></AppLoading>
-  //   );
-  // }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

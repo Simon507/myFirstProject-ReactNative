@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 
 import { useCallback } from 'react';
 import { useFonts } from 'expo-font';
@@ -9,6 +10,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import UseRoute from './assets/router';
 
 export default function App() {
+  const [name, setName] = useState(1);
+
   const [fontsLoaded] = useFonts({
     MerriweatherRegular: require('./assets/fonts/MerriweatherRegular.ttf'),
   });
@@ -23,7 +26,11 @@ export default function App() {
     return null;
   }
 
-  const routing = UseRoute(1);
+  // const OnLoad = target => {
+  //   console.log(target);
+  // };
+
+  const routing = UseRoute(name);
 
   return <NavigationContainer onLayout={onLayoutRootView}>{routing}</NavigationContainer>;
 }
