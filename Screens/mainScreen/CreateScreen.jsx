@@ -1,115 +1,113 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 
-import { Camera } from 'expo-camera';
-import * as ImagePicker from 'expo-image-picker'; //это новый обработчик для картинок вместо      await Camera.requestPermissionsAsync();
-
-import * as MediaLibrary from 'expo-media-library';
+import CameraComponent from '../../assets/components/Camera';
 
 const CreateScreen = () => {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [cameraRef, setCameraRef] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
-  //   const [snapshot, setSnapshot] = useState(null);
+  const [cameraOpen, setCameraOpen] = useState(false);
+  const [photo, setPhoto] = useState(null);
+  const [name, setName] = useState('');
+  const [focusedName, setFocusedName] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await ImagePicker.requestCameraPermissionsAsync();
-      await MediaLibrary.requestPermissionsAsync();
-
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
-
-  //   const makePhoto = async () => {
-  //     const picture = await camera.takePictureAcync();
-  //     // console.log(Camera);
-  //   };
-
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  const onPhotoMake = target => {
+    console.log(target);
+    setPhoto(target);
+  };
+  const nameHandler = text => setName(text);
 
   return (
     <View style={styles.container}>
-      <Camera
-        style={styles.camera}
-        type={type}
-        ref={ref => {
-          setCameraRef(ref);
-          //   console.log(cameraRef);
-        }}
-      >
-        <View style={styles.photoView}>
-          <TouchableOpacity
-            style={styles.flipContainer}
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}
-          >
-            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={async () => {
-              if (cameraRef) {
-                const { uri } = await cameraRef.takePictureAsync();
-                await MediaLibrary.createAssetAsync(uri);
-              }
-            }}
-          >
-            <View style={styles.takePhotoOut}>
-              <View style={styles.takePhotoInner}></View>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </Camera>
+      {/* <Camera></Camera> */}
+
+      <View>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <Text style={styles.buttonTxt}>Кнопка создать</Text>
+        </TouchableOpacity>
+        <Text>Header place</Text>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <Text style={styles.buttonTxt}>Кнопка назад</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.cameraContainer}>
+        <TouchableOpacity
+          style={styles.cameraButton}
+          onPress={() => {
+            setCameraOpen(false);
+            setCameraOpen(true);
+          }}
+        >
+          <Text style={styles.buttonTxt}>Кнопка камеры</Text>
+        </TouchableOpacity>
+        {cameraOpen && <CameraComponent onPhotoMake={onPhotoMake}></CameraComponent>}
+      </View>
+      <View style={styles.cameraContainer}>
+        {photo && (
+          <Image
+            source={{ uri: photo }}
+            style={{ width: 150, height: 150, borderWidth: 1, borderColor: '#fff' }}
+          />
+        )}
+      </View>
+
+      <View>
+        <TextInput
+          value={name}
+          onChangeText={nameHandler}
+          placeholder="Username"
+          style={{ ...styles.input, borderColor: focusedName ? '#430fdf' : '#0fb5df' }}
+          onFocus={() => setFocusedName(true)}
+          onBlur={() => setFocusedName(false)}
+        />
+      </View>
+      <View>
+        <Text>Geoposition place</Text>
+      </View>
+      <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <Text style={styles.buttonTxt}>Опубликовать</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  camera: { flex: 1 },
-  photoView: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    justifyContent: 'flex-end',
-  },
-
-  flipContainer: {
-    flex: 0.1,
-    alignSelf: 'flex-end',
-  },
-
-  button: { alignSelf: 'center' },
-
-  takePhotoOut: {
-    borderWidth: 2,
-    borderColor: 'white',
-    height: 50,
-    width: 50,
-    display: 'flex',
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  cameraContainer: {
+    borderWidth: 1,
+    borderColor: '000',
+    borderRadius: 20,
+    width: '90%',
+    height: '30%',
+    // alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
+  },
+  cameraButton: {
+    position: 'absolute',
+    width: 100,
+    height: 100,
+    borderWidth: 1,
+    borderColor: '#f00',
     borderRadius: 50,
+  },
+  input: {
+    fontSize: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginBottom: 30,
+    fontFamily: 'MerriweatherRegular',
   },
 
-  takePhotoInner: {
-    borderWidth: 2,
-    borderColor: 'white',
-    height: 40,
-    width: 40,
-    backgroundColor: 'white',
-    borderRadius: 50,
+  button: {
+    backgroundColor: '#FF6C00',
+    marginTop: 20,
+    marginBottom: 40,
+    borderRadius: 100,
+    alignItems: 'center',
+    padding: 10,
   },
+  buttonTxt: { color: '#fff' },
 });
 
 export default CreateScreen;
