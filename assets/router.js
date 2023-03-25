@@ -48,6 +48,7 @@ const UseRoute = isAutorisation => {
         }}
         name="PostScreen"
         component={PostScreen}
+        onPress={console.log(`111`)}
       />
       <Tab.Screen
         options={{

@@ -6,7 +6,7 @@ import * as ImagePicker from 'expo-image-picker'; //это новый обраб
 
 import * as MediaLibrary from 'expo-media-library';
 
-const CameraComponent = ({ onPhotoMake }) => {
+const CameraComponent = ({ onPhotoMake }, { navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -20,11 +20,6 @@ const CameraComponent = ({ onPhotoMake }) => {
       setHasPermission(status === 'granted');
     })();
   }, []);
-
-  //   const makePhoto = async () => {
-  //     const picture = await camera.takePictureAcync();
-  //     // console.log(Camera);
-  //   };
 
   if (hasPermission === null) {
     return <View />;
@@ -62,9 +57,9 @@ const CameraComponent = ({ onPhotoMake }) => {
               if (cameraRef) {
                 const { uri } = await cameraRef.takePictureAsync();
                 await MediaLibrary.createAssetAsync(uri);
-
+                console.log(navigation);
                 onPhotoMake(uri);
-                setHasPermission(null);
+                // setHasPermission(null);
               }
             }}
           >

@@ -18,6 +18,7 @@ import {
   ScrollView,
 } from 'react-native';
 
+import { registerDB } from '../redux/autorisation/authOperations';
 // const LoadFont = async () => {
 //   await Font.loadAsync({
 //     AlkatraVariableFont: require('../assets/fonts/AlkatraVariableFont.ttf'),

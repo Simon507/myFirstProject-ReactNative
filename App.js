@@ -9,8 +9,11 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import UseRoute from './assets/router';
 
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+
 export default function App() {
-  const [name, setName] = useState(1);
+  const [name, setName] = useState(false);
 
   const [fontsLoaded] = useFonts({
     MerriweatherRegular: require('./assets/fonts/MerriweatherRegular.ttf'),
@@ -32,5 +35,9 @@ export default function App() {
 
   const routing = UseRoute(name);
 
-  return <NavigationContainer onLayout={onLayoutRootView}>{routing}</NavigationContainer>;
+  return (
+    <Provider store={store}>
+      <NavigationContainer onLayout={onLayoutRootView}>{routing}</NavigationContainer>
+    </Provider>
+  );
 }
