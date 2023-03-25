@@ -1,22 +1,25 @@
-import firebase from 'firebase';
+import * as firebase from 'firebase';
+// import { initializeApp } from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: 'API_KEY',
-  authDomain: 'DOMAIN',
-  databaseURL: 'URL',
-  projectId: 'PROJECT_ID',
-  storageBucket: 'STORAGE',
-  messagingSenderId: 'SENDER_ID',
-  appId: 'APP_ID',
+  apiKey: 'AIzaSyDZ70dEjvzxFLnUqJSkqby7YJ_kr2UNotg',
+  authDomain: 'my-react-native-social.firebaseapp.com',
+  projectId: 'my-react-native-social',
+  storageBucket: 'my-react-native-social.appspot.com',
+  messagingSenderId: '435422371248',
+  appId: '1:435422371248:web:62a64c36693722878a4a75',
+  measurementId: 'G-6E1M54PBGG',
 };
 
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
-const db = firebase.firestore();
-const storage = firebase.storage();
+export default firebase;
 
-export { auth, db, storage };
+// export const auth = firebase.auth();
+// export const db = firebase.firestore();
+// export const storage = firebase.storage();
+
+// export { auth, db, storage };

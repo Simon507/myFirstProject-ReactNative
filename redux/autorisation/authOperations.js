@@ -1,5 +1,18 @@
-// import { auth } from '../../fireBase/config';
+// import 'firebase/auth';
 
+import db from '../../fireBase/config';
+
+// import auth from '../../fireBase/config';
+
+const registerDb = () => async (dispatch, getState) => {};
+const enterDb = () => async (dispatch, getState) => {
+  try {
+  } catch (error) {
+    console.log(error);
+    console.log(error.messager);
+  }
+};
+const exitDb = () => async (dispatch, getState) => {};
 // export const registerDB = async () => {
 //   try {
 //     await auth.createUserWithEmailAndPassword('emai', 'password');
