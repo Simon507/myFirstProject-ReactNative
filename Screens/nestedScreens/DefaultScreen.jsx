@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
+import { useDispatch } from 'react-redux';
 import { Text, View, StyleSheet, Button } from 'react-native';
+
+import { exitDb } from '../../redux/autorisation/authOperations';
+import { authSignOut } from '../../redux/autorisation/authOperations';
 // import { Button } from 'react-native-web';
 
 const PostScreen = ({ navigation }) => {
@@ -8,7 +11,14 @@ const PostScreen = ({ navigation }) => {
   // console.log(navigation.isFocused());
   //   console.log(navigation.getState());
 
-  const from = 'PostScreen';
+  // const from = 'PostScreen';
+
+  // const dispatch = useDispatch();
+
+  const signOut = () => {
+    authSignOut();
+  };
+
   // useEffect(() => {
   //   console.log(`зщыеы`);
   // }, []);
@@ -28,6 +38,13 @@ const PostScreen = ({ navigation }) => {
         title="Карта"
         onPress={() => {
           navigation.navigate('MapScreen');
+        }}
+      ></Button>
+
+      <Button
+        title="EXIT"
+        onPress={() => {
+          exitDb();
         }}
       ></Button>
     </View>

@@ -1,11 +1,14 @@
 import { auth } from '../../fireBase/config';
 
-import { authSlice } from '../autorisation/authReducer';
+import { authSlice, authSignOut } from '../autorisation/authReducer';
+import { useDispatch } from 'react-redux';
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
+  onAuthStateChanged,
+  signOut,
 } from 'firebase/auth';
 
 export const RegisterDb = (email, password, nickName) => async (dispatch, getState) => {
@@ -16,11 +19,13 @@ export const RegisterDb = (email, password, nickName) => async (dispatch, getSta
       const user = userCredential.user;
       updateProfile(auth.currentUser, {
         displayName: nickName,
+        stateChange: true,
+
         // photoURL: 'https://example.com/jane-q-user/profile.jpg',
       })
         .then(() => {
-          // Profile updated!
-          // ...
+          // const dispatch = useDispatch();
+          dispatch(authSlice.actions.authStateChange());
         })
         .catch(error => {
           // An error occurred
@@ -52,12 +57,22 @@ export const enterDb = (email, password) => async (dispatch, getState) => {
   signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
       const user = userCredential.user;
+      // const dispatch = useDispatch();
+
+      console.log(user);
+
+      // updateProfile(auth.currentUser, {
+
+      //   // photoURL: 'https://example.com/jane-q-user/profile.jpg',
+      // });
+      dispatch(authSlice.actions.authStateChange({ stateChange: 'true' }));
     })
     .catch(error => {
       const errorCode = error.code;
       console.log(errorCode);
       const errorMessage = error.message;
       console.log(errorMessage);
+
       // Toast.show({
       //   type: 'success',
       //   text1: errorCode,
@@ -69,19 +84,49 @@ export const enterDb = (email, password) => async (dispatch, getState) => {
 };
 
 // export const changeUser = (email, password, nickName) => async (dispatch, getState) => {
-//   onAuthStateChanged(auth, user => {
-//     if (user) {
-//       user.updateUserProfile({ displayName: nickName });
-//       // User is signed in, see docs for a list of available properties
-//       // https://firebase.google.com/docs/reference/js/firebase.User
-//       const uid = user.uid;
 
-//       dispatch();
-//     } else {
-//       // User is signed out
-//       // ...
-//     }
-//   });
-// };
+export const StatusState = () => async (dispatch, getState) => {
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
 
-// const exitDb = () => async (dispatch, getState) => {};
+      // updateProfile(auth.currentUser, {
+      //   displayName: nickName,
+      //   stateChange: true,
+      // });
+
+      const userUpdateProfile = {
+        nickName: user.displayName,
+        userId: user.uid,
+      };
+      // const uid = user.uid;
+      // updateProfile(auth.currentUser, {
+      //   userId: uid,
+      //   // displayName: nickName,
+      //   // photoURL: 'https://example.com/jane-q-user/profile.jpg',
+      // });
+      // const dispatch = useDispatch();
+      dispatch(authSlice.actions.updateUserProfile(userUpdateProfile));
+
+      // setUserId(uid);
+
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+  });
+};
+
+export const exitDb = () => async (dispatch, getState) => {
+  signOut(auth)
+    .then(() => {
+      dispatch(authSlice.actions.authSignOut({ stateChange: 'false' }));
+      console.log(`ESIITTT`);
+      // dispatch(authSlice.actions.authSignOut({ stateChange: false }));
+    })
+    .catch(error => {
+      // An error happened.
+    });
+};
