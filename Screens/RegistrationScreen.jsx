@@ -18,7 +18,9 @@ import {
   ScrollView,
 } from 'react-native';
 
-import { RegisterDb } from '../fireBase/config';
+import { RegisterDb } from '../redux/autorisation/authOperations';
+
+import { useDispatch } from 'react-redux';
 // const LoadFont = async () => {
 //   await Font.loadAsync({
 //     AlkatraVariableFont: require('../assets/fonts/AlkatraVariableFont.ttf'),
@@ -41,9 +43,12 @@ export default function RegistrationScreen({ navigation }) {
   const emailHandler = text => setEmail(text);
   const passwordHandler = text => setPassword(text);
 
+  const dispatch = useDispatch();
+
   const onSubmit = () => {
     Keyboard.dismiss();
-    console.log('Введено', `${name} + ${email} + ${password}`);
+    // console.log('Введено', `${name} + ${email} + ${password}`);
+    dispatch(RegisterDb(email, password, name));
   };
 
   // if (!fontIsReady) {

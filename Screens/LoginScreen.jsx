@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 // import { AppLoading } from 'expo';
-
+import { enterDb } from '../redux/autorisation/authOperations';
 // import * as Font from 'expo-font';
+import { useDispatch } from 'react-redux';
 
 import {
   StyleSheet,
@@ -19,17 +20,21 @@ import {
 } from 'react-native';
 
 export default function LoginScreen({ navigation }) {
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [focusedName, setFocusedName] = useState(false);
+  const [focusedEmail, setFocusedEmail] = useState(false);
   const [focusedPass, setFocusedPass] = useState(false);
 
-  const nameHandler = text => setName(text);
+  const emailHandler = text => setEmail(text);
   const passwordHandler = text => setPassword(text);
+
+  const dispatch = useDispatch();
 
   const onLogin = () => {
     Keyboard.dismiss();
-    console.log('Введено', `${name} + ${password}`);
+    dispatch(enterDb(email, password));
+
+    // console.log('Введено', `${email} + ${password}`);
   };
 
   return (
@@ -40,12 +45,12 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.title}>Вход в приложение</Text>
             <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
               <TextInput
-                value={name}
-                onChangeText={nameHandler}
-                placeholder="Username"
-                style={{ ...styles.input, borderColor: focusedName ? '#430fdf' : '#0fb5df' }}
-                onFocus={() => setFocusedName(true)}
-                onBlur={() => setFocusedName(false)}
+                value={email}
+                onChangeText={emailHandler}
+                placeholder="Email"
+                style={{ ...styles.input, borderColor: focusedEmail ? '#430fdf' : '#0fb5df' }}
+                onFocus={() => setFocusedEmail(true)}
+                onBlur={() => setFocusedEmail(false)}
               />
               <TextInput
                 value={password}

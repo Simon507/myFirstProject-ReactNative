@@ -12,8 +12,11 @@ import UseRoute from './assets/router';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
+import { auth } from './fireBase/config';
+import { onAuthStateChanged } from 'firebase/auth';
+
 export default function App() {
-  const [name, setName] = useState(false);
+  const [userId, setUserId] = useState(false);
 
   const [fontsLoaded] = useFonts({
     MerriweatherRegular: require('./assets/fonts/MerriweatherRegular.ttf'),
@@ -29,11 +32,21 @@ export default function App() {
     return null;
   }
 
-  // const OnLoad = target => {
-  //   console.log(target);
-  // };
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid;
+      setUserId(uid);
 
-  const routing = UseRoute(name);
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+  });
+
+  const routing = UseRoute(userId);
 
   return (
     <Provider store={store}>

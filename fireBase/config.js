@@ -17,18 +17,4 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 
-export const RegisterDb = (email, password) => {
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(userCredential => {
-      // Signed in
-      var user = userCredential.user;
-      // ...
-    })
-    .catch(error => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ..
-    });
-};
+export { auth };
