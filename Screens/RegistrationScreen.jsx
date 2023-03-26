@@ -18,7 +18,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-import { registerDB } from '../redux/autorisation/authOperations';
+import { RegisterDb } from '../fireBase/config';
 // const LoadFont = async () => {
 //   await Font.loadAsync({
 //     AlkatraVariableFont: require('../assets/fonts/AlkatraVariableFont.ttf'),
@@ -44,7 +44,6 @@ export default function RegistrationScreen({ navigation }) {
   const onSubmit = () => {
     Keyboard.dismiss();
     console.log('Введено', `${name} + ${email} + ${password}`);
-    navigation.navigate('PostScreen');
   };
 
   // if (!fontIsReady) {

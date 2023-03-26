@@ -1,8 +1,5 @@
-import * as firebase from 'firebase';
-// import { initializeApp } from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-import 'firebase/storage';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDZ70dEjvzxFLnUqJSkqby7YJ_kr2UNotg',
@@ -14,12 +11,24 @@ const firebaseConfig = {
   measurementId: 'G-6E1M54PBGG',
 };
 
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-export default firebase;
+// Initialize Firebase Authentication and get a reference to the service
+const auth = getAuth(app);
 
-// export const auth = firebase.auth();
-// export const db = firebase.firestore();
-// export const storage = firebase.storage();
-
-// export { auth, db, storage };
+export const RegisterDb = (email, password) => {
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      // Signed in
+      var user = userCredential.user;
+      // ...
+    })
+    .catch(error => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ..
+    });
+};
