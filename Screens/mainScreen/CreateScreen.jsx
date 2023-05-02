@@ -14,15 +14,16 @@ const CreateScreen = ({ navigation }) => {
   const [locationOpen, setLocationOpen] = useState(false);
   const [name, setName] = useState('');
   const [focusedName, setFocusedName] = useState(false);
+  const [makePhoto, setMakePhoto] = useState(false);
 
   const onPhotoMake = target => {
-    console.log(target);
+    // console.log(target);
     setPhoto(target);
     setCameraOpen(false);
   };
 
   const onLocationMake = target => {
-    console.log(target);
+    // console.log(target);
     setLocation(target);
   };
 
@@ -59,9 +60,9 @@ const CreateScreen = ({ navigation }) => {
         </TouchableOpacity> */}
       </View>
 
-      <View style={styles.cameraContainer}>
+      <View style={cameraOpen ? styles.cameraContainerOpen : styles.cameraContainer}>
         <TouchableOpacity
-          style={styles.cameraButton}
+          style={cameraOpen ? styles.cameraButtonOff : styles.cameraButton}
           onPress={() => {
             setPhoto(null);
             setCameraOpen(false);
@@ -146,6 +147,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
   },
+  cameraContainerOpen: {
+    borderWidth: 1,
+    borderColor: '000',
+    borderRadius: 20,
+    width: '90%',
+    height: '70%',
+    // alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
   cameraButton: {
     position: 'absolute',
     zIndex: 300,
@@ -157,6 +168,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  cameraButtonOff: {
+    display: 'none',
   },
   nameContainer: {
     borderWidth: 1,
@@ -178,7 +192,7 @@ const styles = StyleSheet.create({
   locationContainer: {
     zIndex: 9000,
     padding: 10,
-    flexDirection: 'row',
+    flexDirection: 'column',
     borderWidth: 1,
     borderColor: '000',
     borderRadius: 20,
@@ -189,13 +203,15 @@ const styles = StyleSheet.create({
   },
   mapButton: {
     position: 'absolute',
-
+    bottom: 0,
+    right: 0,
+    zIndex: 500,
     width: 75,
     height: 75,
     borderWidth: 1,
     borderColor: '#969090',
     borderRadius: 50,
-    alignSelf: 'center',
+    // alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
   },

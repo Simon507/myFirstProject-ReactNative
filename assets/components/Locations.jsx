@@ -20,36 +20,41 @@ const Locations = ({ onLocationMake }) => {
       };
       setLocation(coords);
       onLocationMake(location);
+      // console.log(coords);
     })();
   }, []);
 
-  return;
-  // <View style={styles.container}>
-  //   <MapView
-  //     style={styles.mapStyle}
-  //     region={{
-  //       ...location,
-  //       latitudeDelta: 0.0922,
-  //       longitudeDelta: 0.0421,
-  //     }}
-  //     showsUserLocation={true}
-  //   >
-  //     {location && <Marker title="I am here" coordinate={location} description="Hello" />}
-  //   </MapView>
-  // </View>
+  return (
+    <View style={styles.container}>
+      <MapView
+        style={styles.mapStyle}
+        region={{
+          ...location,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        showsUserLocation={true}
+      >
+        {location && <Marker title="I am here" coordinate={location} description="Hello" />}
+      </MapView>
+    </View>
+  );
 };
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   mapStyle: {
-//     width: Dimensions.get('window').width,
-//     height: Dimensions.get('window').height,
-//   },
-// });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    textAlign: 'left',
+  },
+  mapStyle: {
+    // position: 'absolute',
+    // top: '-250%',
+    // left: '-100%',
+    width: '100%',
+    height: '100%',
+  },
+});
 
 export default Locations;
