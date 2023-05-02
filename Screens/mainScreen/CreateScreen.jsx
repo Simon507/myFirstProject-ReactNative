@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
+
 import CameraComponent from '../../assets/components/Camera';
 import Locations from '../../assets/components/Locations';
 import { EvilIcons, Feather } from '@expo/vector-icons';
@@ -10,7 +12,7 @@ const CreateScreen = ({ navigation }) => {
 
   const [cameraOpen, setCameraOpen] = useState(false);
   const [photo, setPhoto] = useState(null);
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState(null);
   const [locationOpen, setLocationOpen] = useState(false);
   const [name, setName] = useState('');
   const [focusedName, setFocusedName] = useState(false);
@@ -29,6 +31,15 @@ const CreateScreen = ({ navigation }) => {
 
   const nameHandler = text => setName(text);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      setCameraOpen(false);
+      setPhoto(null);
+      setLocationOpen(false);
+      setName('');
+    }, [])
+  );
+
   // useEffect(() => {
   //   console.log(`focus`);
   //   console.log(navigation.isFocused());
@@ -41,12 +52,12 @@ const CreateScreen = ({ navigation }) => {
   return (
     <View
       style={styles.container}
-      onFocus={() => {
-        console.log(`focus`);
-      }}
-      onBlur={() => {
-        console.log(`blur`);
-      }}
+      // onFocus={() => {
+      //   console.log(`focus`);
+      // }}
+      // onBlur={() => {
+      //   console.log(`blur`);
+      // }}
     >
       {/* <Camera></Camera> */}
 
@@ -88,12 +99,13 @@ const CreateScreen = ({ navigation }) => {
           onChangeText={nameHandler}
           placeholder="Название фото"
           style={{ ...styles.input, borderColor: focusedName ? '#430fdf' : '#0fb5df' }}
-          onFocus={() => setFocusedName(true)}
-          onBlur={() => setFocusedName(false)}
+          // onFocus={() => setFocusedName(true)}
+          // onBlur={() => setFocusedName(false)}
         />
       </View>
       <View style={styles.locationContainer}>
         <Text>Место создания фото</Text>
+        {location && <Text>ttttt</Text>}
         <TouchableOpacity
           style={styles.mapButton}
           onPress={() => {
