@@ -44,7 +44,7 @@ const Main = () => {
   }
 
   const route = JSON.parse(stateChange.autorisation.stateChange);
-  console.log(route);
+  // console.log(route);
 
   //   if (route === 'false') {
   //     console.log(`asdad`);

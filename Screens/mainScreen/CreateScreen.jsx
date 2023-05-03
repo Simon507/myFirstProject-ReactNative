@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Text, View, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
@@ -7,68 +8,79 @@ import CameraComponent from '../../assets/components/Camera';
 import Locations from '../../assets/components/Locations';
 import { EvilIcons, Feather } from '@expo/vector-icons';
 
-const CreateScreen = ({ navigation }) => {
-  // console.log(`route`, route.params);
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
+import initialApp from '../../fireBase/config';
+const storage = getStorage(initialApp);
+const db = getFirestore(initialApp);
+
+const CreateScreen = ({ navigation }) => {
   const [cameraOpen, setCameraOpen] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [location, setLocation] = useState(null);
   const [locationOpen, setLocationOpen] = useState(false);
-  const [name, setName] = useState('');
+  const [lablePhoto, setLablePhoto] = useState('');
   const [focusedName, setFocusedName] = useState(false);
-  const [makePhoto, setMakePhoto] = useState(false);
+
+  const { userId, nickName, photoURL } = useSelector(state => state.autorisation);
 
   const onPhotoMake = target => {
-    // console.log(target);
     setPhoto(target);
     setCameraOpen(false);
   };
 
   const onLocationMake = target => {
-    // console.log(target);
     setLocation(target);
   };
 
-  const nameHandler = text => setName(text);
+  const nameHandler = text => setLablePhoto(text);
+
+  const getPhotoToUpload = async () => {
+    const response = await fetch(photo);
+    const file = await response.blob();
+    const uniquePostId = Date.now().toString();
+
+    const storageRef = ref(storage, `postImages/${uniquePostId}.jpg`);
+
+    await uploadBytes(storageRef, file).then(snapshot => {});
+
+    await getDownloadURL(ref(storage, `postImages/${uniquePostId}.jpg`)).then(url => {
+      // writeOnDB(url);
+    });
+    // .then(() => navigate());
+  };
+
+  const writeOnDB = async photo => {
+    try {
+      const docRef = await addDoc(collection(db, 'usersPosts'), {
+        userId,
+        nickName,
+        lablePhoto,
+        // photo,
+        // location: location.coords,
+        location,
+      });
+      console.log('Document written with ID: ', docRef.id);
+    } catch (e) {
+      console.error('Error adding document: ', e);
+      throw e;
+    }
+  };
 
   useFocusEffect(
     React.useCallback(() => {
       setCameraOpen(false);
       setPhoto(null);
       setLocationOpen(false);
-      setName('');
+      setLablePhoto('');
     }, [])
   );
 
-  // useEffect(() => {
-  //   console.log(`focus`);
-  //   console.log(navigation.isFocused());
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(`focus`);
-  // }, []);
-
   return (
-    <View
-      style={styles.container}
-      // onFocus={() => {
-      //   console.log(`focus`);
-      // }}
-      // onBlur={() => {
-      //   console.log(`blur`);
-      // }}
-    >
-      {/* <Camera></Camera> */}
-
+    <View style={styles.container}>
       <View>
-        {/* <TouchableOpacity style={styles.createButton} onPress={() => {}}>
-          <Text style={styles.buttonTxt}>Кнопка создать</Text>
-        </TouchableOpacity> */}
         <Text style={styles.headerTitle}>Создание нового поста</Text>
-        {/* <TouchableOpacity style={styles.backButton} onPress={() => {}}>
-          <Text style={styles.buttonTxt}>Кнопка назад</Text>
-        </TouchableOpacity> */}
       </View>
 
       <View style={cameraOpen ? styles.cameraContainerOpen : styles.cameraContainer}>
@@ -90,40 +102,38 @@ const CreateScreen = ({ navigation }) => {
           />
         )}
       </View>
-      {/* <View style={styles.cameraContainer}></View> */}
 
       <View style={styles.nameContainer}>
         <Text>Введите название фото</Text>
         <TextInput
-          value={name}
+          value={lablePhoto}
           onChangeText={nameHandler}
           placeholder="Название фото"
+          onFocus={() => setFocusedName(true)}
+          onBlur={() => setFocusedName(false)}
           style={{ ...styles.input, borderColor: focusedName ? '#430fdf' : '#0fb5df' }}
-          // onFocus={() => setFocusedName(true)}
-          // onBlur={() => setFocusedName(false)}
         />
       </View>
       <View style={styles.locationContainer}>
         <Text>Место создания фото</Text>
-        {location && <Text>ttttt</Text>}
+
         <TouchableOpacity
           style={styles.mapButton}
           onPress={() => {
-            // Locations(onLocationMake);
             setLocationOpen(false);
             setLocationOpen(true);
           }}
         >
           <Feather name="map-pin" size={50} color="#969090" />
         </TouchableOpacity>
-        {
-          locationOpen && <Locations onLocationMake={onLocationMake}></Locations>
-
-          // <Text>{(location.latitude, location.longitude)}</Text>
-        }
-        {/* {location && <Text>{location}</Text>} */}
+        {locationOpen && <Locations onLocationMake={onLocationMake}></Locations>}
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          getPhotoToUpload();
+        }}
+      >
         <Text style={styles.buttonTxt}>Опубликовать</Text>
       </TouchableOpacity>
     </View>

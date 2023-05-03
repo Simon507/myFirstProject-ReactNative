@@ -52,6 +52,7 @@ const UseRoute = isAutorisation => {
       <Tab.Screen
         options={{
           headerShown: false,
+          // headerBackTitleVisible: false,
           tabBarLabel: 'Добавить пост',
           tabBarIcon: ({ focused, color, size }) => {
             return <MaterialCommunityIcons name="tooltip-plus-outline" size={size} color={color} />;

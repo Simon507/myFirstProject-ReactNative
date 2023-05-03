@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // import { AppLoading } from 'expo';
-
+// import { PermissionsAndroid, Platform } from 'react-native';
 // import * as Font from 'expo-font';
 
 import {
@@ -25,6 +25,13 @@ import { useDispatch } from 'react-redux';
 //   await Font.loadAsync({
 //     AlkatraVariableFont: require('../assets/fonts/AlkatraVariableFont.ttf'),
 //   });
+// };
+
+// const initialState = {
+//   email: '',
+//   password: '',
+//   nickname: '',
+//   // photoURL: '',
 // };
 
 export default function RegistrationScreen({ navigation }) {

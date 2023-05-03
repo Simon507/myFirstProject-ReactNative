@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Text, View, StyleSheet, Button } from 'react-native';
 
 import { exitDb } from '../../redux/autorisation/authOperations';
@@ -7,26 +8,11 @@ import { authSignOut } from '../../redux/autorisation/authOperations';
 // import { Button } from 'react-native-web';
 
 const PostScreen = ({ navigation }) => {
-  //   console.log(navigation);
-  // console.log(navigation.isFocused());
-  //   console.log(navigation.getState());
-
-  // const from = 'PostScreen';
-
-  // const dispatch = useDispatch();
-
-  const signOut = () => {
-    authSignOut();
-  };
-
-  // useEffect(() => {
-  //   console.log(`зщыеы`);
-  // }, []);
-
-  // navigation.navigate('Cren', from);
+  const value = useSelector(state => state.autorisation);
 
   return (
     <View style={styles.container}>
+      <Text> Привет, {value.nickName} </Text>
       <Button
         title="комменты"
         onPress={() => {

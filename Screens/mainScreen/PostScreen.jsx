@@ -12,9 +12,29 @@ const NectedScreen = createStackNavigator();
 const PostsScreen = () => {
   return (
     <NectedScreen.Navigator>
-      <NectedScreen.Screen name="DefaultScreen" component={DefaultScreen} />
-      <NectedScreen.Screen name="CommentsScreenPosts" component={CommentsScreenPosts} />
-      <NectedScreen.Screen name="MapScreen" component={MapScreen} />
+      <NectedScreen.Screen
+        name="DefaultScreen"
+        component={DefaultScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <NectedScreen.Screen
+        name="CommentsScreenPosts"
+        component={CommentsScreenPosts}
+        options={{
+          headerTitle: 'Ко всем постам',
+          // headerShown: false,
+        }}
+      />
+      <NectedScreen.Screen
+        name="MapScreen"
+        component={MapScreen}
+        options={{
+          headerTitle: 'Ко всем постам',
+          // headerShown: false,
+        }}
+      />
     </NectedScreen.Navigator>
   );
 };
