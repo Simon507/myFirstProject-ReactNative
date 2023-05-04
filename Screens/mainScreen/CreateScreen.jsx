@@ -42,7 +42,7 @@ const CreateScreen = ({ navigation }) => {
     const uniquePostId = Date.now().toString();
     console.log(storage);
 
-    const storageRef = ref(storage, `usersPosts/image/${uniquePostId}.jpg`);
+    const storageRef = ref(storage, `usersPosts/images/${uniquePostId}.jpg`);
 
     const uploadTask = uploadBytesResumable(storageRef, file);
 
