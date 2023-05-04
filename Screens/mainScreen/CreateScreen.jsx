@@ -8,7 +8,7 @@ import CameraComponent from '../../assets/components/Camera';
 import Locations from '../../assets/components/Locations';
 import { EvilIcons, Feather } from '@expo/vector-icons';
 
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
 import initialApp from '../../fireBase/config';
@@ -43,13 +43,29 @@ const CreateScreen = ({ navigation }) => {
 
     const storageRef = ref(storage, `postImages/${uniquePostId}.jpg`);
 
-    await uploadBytes(storageRef, file).then(snapshot => {});
+    const uploadTask = uploadBytesResumable(storageRef, file);
 
-    await getDownloadURL(ref(storage, `postImages/${uniquePostId}.jpg`)).then(url => {
-      // writeOnDB(url);
-    });
-    // .then(() => navigate());
+    uploadTask.on(
+      'state_changed',
+      snapshot => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is' + progress + '% done');
+      },
+      error => {
+        console.log('Error uloading image:', error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+          console.log('File aviable at', downloadURL);
+        });
+      }
+    );
   };
+
+  // await getDownloadURL(ref(storage, `postImages/${uniquePostId}.jpg`)).then(url => {
+  //   writeOnDB(url);
+  // });
+  // .then(() => navigate());
 
   const writeOnDB = async photo => {
     try {
