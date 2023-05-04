@@ -40,8 +40,9 @@ const CreateScreen = ({ navigation }) => {
     const response = await fetch(photo);
     const file = await response.blob();
     const uniquePostId = Date.now().toString();
+    console.log(storage);
 
-    const storageRef = ref(storage, `postImages/${uniquePostId}.jpg`);
+    const storageRef = ref(storage, `usersPosts/image/${uniquePostId}.jpg`);
 
     const uploadTask = uploadBytesResumable(storageRef, file);
 
