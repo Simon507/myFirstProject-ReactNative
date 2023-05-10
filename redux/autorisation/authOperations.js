@@ -38,44 +38,6 @@ export const RegisterDb = (email, password, nickName) => async (dispatch, getSta
   }
 };
 
-// .then(userCredential => {
-//   // Signed in
-//   const user = userCredential.user;
-//   updateProfile(auth.currentUser, {
-//     displayName: nickName,
-//     stateChange: true,
-
-//     // photoURL: 'https://example.com/jane-q-user/profile.jpg',
-//   })
-//     .then(() => {
-//       // const dispatch = useDispatch();
-//       dispatch(authSlice.actions.authStateChange());
-//     })
-//     .catch(error => {
-//       // An error occurred
-//       // ...
-//     });
-//   console.log(user);
-
-//       user.updateUserProfile({ displayName: nickName });
-//       dispatch(authSlice.actions.updateUserProfile({ userId: user.uid, nickName: displayName }));
-//       // ...
-//     })
-//     .catch(error => {
-//       const errorCode = error.code;
-//       console.log(errorCode);
-//       const errorMessage = error.message;
-//       console.log(errorMessage);
-//       // Toast.show({
-//       //   type: 'success',
-//       //   text1: errorCode,
-//       //   text2: errorMessage,
-//       // });
-//       // return <Toast style={styles.toaster} />;
-//       // ..
-//     });
-// };
-
 export const enterDb = (email, password) => async (dispatch, getState) => {
   try {
     await signInWithEmailAndPassword(auth, email, password).then(userCredential => {
@@ -92,7 +54,7 @@ export const StatusState = () => async (dispatch, getState) => {
       const userUpdateProfile = {
         userId: user.uid,
         nickName: user.displayName,
-        photoURL: user.photoURL,
+        // photoURL: user.photoURL,
       };
 
       dispatch(authSlice.actions.authStateChange({ stateChange: true }));

@@ -2,7 +2,7 @@ import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 
-export const Posts = ({ post, navigation }) => {
+export const UserPosts = ({ post, navigation }) => {
   let date = new Date(post.location.timestamp);
   let dd = date.getDate(date);
   let mm = date.getMonth(date) + 1;
@@ -10,12 +10,12 @@ export const Posts = ({ post, navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text style={{ color: '#007aff', fontSize: 30, fontWeight: 500 }}>{post.nickName}</Text>
       <Image
         source={{ uri: post.photo }}
         style={{ width: 200, height: 200, borderRadius: 10, marginBottom: 5 }}
       />
       <View style={styles.userPost}>
-        <Text style={{ color: '#007aff', fontSize: 15, fontWeight: 500 }}>{post.nickName}</Text>
         <Text style={{ fontSize: 15, fontWeight: 700 }}>{post.lablePhoto}</Text>
         <TouchableOpacity
           style={styles.button}
@@ -53,10 +53,11 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
     justifyContent: 'center',
-    borderBottomColor: '#007aff',
+    borderBottomColor: '#D9EBE9',
     borderBottomWidth: 1,
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   userPost: {
     flexDirection: 'column',
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderWidth: 1,
-    borderColor: '#007aff',
+    borderColor: '#add1db',
     paddingRight: 3,
     paddingLeft: 3,
     borderRadius: 6,

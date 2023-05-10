@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import initialApp from '../../fireBase/config';
 import { Posts } from '../../assets/components/Post';
-import { Text, View, StyleSheet, Button, Image, FlatList } from 'react-native';
+import { Text, View, StyleSheet, Button, FlatList } from 'react-native';
 
 import { exitDb } from '../../redux/autorisation/authOperations';
 // import { authSignOut } from '../../redux/autorisation/authOperations';
@@ -15,10 +15,10 @@ const db = getFirestore(initialApp);
 const PostScreen = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
   const value = useSelector(state => state.autorisation);
+  const dispatch = useDispatch();
 
   const getAllPost = async () => {
     const querySnapshot = await getDocs(collection(db, 'usersPosts'));
-    console.log(querySnapshot);
     const newPosts = [];
     querySnapshot.forEach(item => {
       newPosts.push({ ...item.data(), id: item.id });
@@ -26,7 +26,7 @@ const PostScreen = ({ route, navigation }) => {
     setPosts(newPosts);
   };
 
-  const signOutDb = () => {};
+  // const signOutDb = () => {};
 
   useFocusEffect(
     React.useCallback(() => {
@@ -42,7 +42,7 @@ const PostScreen = ({ route, navigation }) => {
           style={styles.exitButton}
           title="EXIT"
           onPress={() => {
-            exitDb();
+            dispatch(exitDb());
           }}
         ></Button>
       </View>
@@ -58,6 +58,7 @@ const PostScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#edf7fa',
     paddingTop: 40,
     flex: 1,
     alignItems: 'center',
