@@ -10,7 +10,6 @@ export const UserPosts = ({ post, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{ color: '#007aff', fontSize: 30, fontWeight: 500 }}>{post.nickName}</Text>
       <Image
         source={{ uri: post.photo }}
         style={{ width: 200, height: 200, borderRadius: 10, marginBottom: 5 }}

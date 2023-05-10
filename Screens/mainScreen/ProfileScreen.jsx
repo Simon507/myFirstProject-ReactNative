@@ -36,6 +36,7 @@ const ProfileScreen = () => {
     <ImageBackground style={styles.image} source={require('../../assets/images/bgImage.jpg')}>
       <View style={styles.container}>
         <View style={styles.userContainer}>
+          <Text style={{ color: '#007aff', fontSize: 30, fontWeight: 500 }}>{nickName}</Text>
           <FlatList
             data={userPosts}
             keyExtractor={(item, index) => index.toString()}

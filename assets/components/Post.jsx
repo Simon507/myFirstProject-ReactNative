@@ -51,14 +51,17 @@ export const Posts = ({ post, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
     marginBottom: 10,
     justifyContent: 'center',
+    alignItems: 'center',
     borderBottomColor: '#007aff',
     borderBottomWidth: 1,
     display: 'flex',
     flexDirection: 'row',
   },
   userPost: {
+    maxWidth: '40%',
     flexDirection: 'column',
     gap: 5,
     marginBottom: 5,
