@@ -58,15 +58,11 @@ const CreateScreen = ({ navigation }) => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
           console.log('File aviable at', downloadURL);
+          writeOnDB(downloadURL);
         });
       }
     );
   };
-
-  // await getDownloadURL(ref(storage, `postImages/${uniquePostId}.jpg`)).then(url => {
-  //   writeOnDB(url);
-  // });
-  // .then(() => navigate());
 
   const writeOnDB = async photo => {
     try {
@@ -74,7 +70,7 @@ const CreateScreen = ({ navigation }) => {
         userId,
         nickName,
         lablePhoto,
-        // photo,
+        photo,
         // location: location.coords,
         location,
       });
