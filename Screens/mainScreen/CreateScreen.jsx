@@ -18,7 +18,7 @@ const db = getFirestore(initialApp);
 const CreateScreen = ({ navigation }) => {
   const [cameraOpen, setCameraOpen] = useState(false);
   const [photo, setPhoto] = useState(null);
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState({ timestamp: Date.now() });
   const [locationOpen, setLocationOpen] = useState(false);
   const [lablePhoto, setLablePhoto] = useState('');
   const [focusedName, setFocusedName] = useState(false);
@@ -40,7 +40,7 @@ const CreateScreen = ({ navigation }) => {
     const response = await fetch(photo);
     const file = await response.blob();
     const uniquePostId = Date.now().toString();
-    console.log(storage);
+    // console.log(storage);
 
     const storageRef = ref(storage, `usersPosts/images/${uniquePostId}.jpg`);
 

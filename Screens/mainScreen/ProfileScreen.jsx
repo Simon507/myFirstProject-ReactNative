@@ -13,8 +13,11 @@ const db = getFirestore(initialApp);
 
 const ProfileScreen = () => {
   const [userPosts, setUserPosts] = useState([]);
+  const [avatar, setAvatar] = useState(null);
   const dispatch = useDispatch();
-  const { userId, photoURL, nickName } = useSelector(state => state.autorisation);
+  const { userId, nickName } = useSelector(state => state.autorisation);
+
+  // console.log(photoURL);
 
   const getUserPosts = async () => {
     const q = query(collection(db, 'usersPosts'), where('userId', '==', userId));
@@ -26,9 +29,28 @@ const ProfileScreen = () => {
     setUserPosts(userPost);
   };
 
+  const getAvatar = async () => {
+    const querySnapshot = await getDocs(collection(db, `usersPosts/avatars/${nickName}`));
+    // const q = query(collection(db, `usersPosts/avatars/${nickName}`));
+    // console.log(q.path);
+
+    const avatar = [];
+    querySnapshot.forEach(item => {
+      avatar.push({ ...item.data(), id: item.id });
+    });
+
+    // console.log(avatar[0].photo);
+
+    // console.log(querySnapshot.item.data);
+    // const avatar = await getDocs(q);
+
+    setAvatar(avatar[0].photo);
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       getUserPosts();
+      getAvatar();
     }, [])
   );
 
@@ -36,6 +58,21 @@ const ProfileScreen = () => {
     <ImageBackground style={styles.image} source={require('../../assets/images/bgImage.jpg')}>
       <View style={styles.container}>
         <View style={styles.userContainer}>
+          <View style={styles.userAvatar}>
+            {avatar ? (
+              <ImageBackground style={styles.avatarImage} source={{ uri: avatar }} />
+            ) : (
+              <View style={styles.avatarAddBtn}>
+                <Text
+                  style={{
+                    color: '#0fb5df',
+                  }}
+                >
+                  Аватар не загрузился...
+                </Text>
+              </View>
+            )}
+          </View>
           <Text style={{ color: '#007aff', fontSize: 30, fontWeight: 500 }}>{nickName}</Text>
           <FlatList
             data={userPosts}
@@ -61,6 +98,25 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
+  },
+  userAvatar: {
+    backgroundColor: '#F6F6F6',
+    position: 'absolute',
+    width: 125,
+    height: 125,
+    top: -60,
+    left: '35%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    borderColor: '#0fb5df',
+    borderWidth: 1,
+    overflow: 'hidden',
+  },
+  avatarImage: {
+    height: 150,
+    width: 150,
+    resizeMode: 'cover',
   },
   userContainer: {
     width: '100%',

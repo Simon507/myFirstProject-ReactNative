@@ -14,29 +14,30 @@ import {
 
 const auth = getAuth(initialApp);
 
-export const RegisterDb = (email, password, nickName) => async (dispatch, getState) => {
-  // console.log(`peredano`, `${email} + ${password} + ${nickName}`);
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(auth.currentUser, {
-      displayName: nickName,
-      // photoURL: photoURL,
-    })
-      .then(() => {
-        const user = auth.currentUser;
-        dispatch(
-          authSlice.actions.updateUserProfile({
-            userId: user.uid,
-            nickName: user.displayName,
-            // photoURL: user.photoURL,
-          })
-        );
+export const RegisterDb =
+  ({ email, password, nickName, photoURL }) =>
+  async (dispatch, getState) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(auth.currentUser, {
+        displayName: nickName,
+        photoURL: photoURL,
       })
-      .then(authSignInUser(email, password));
-  } catch (error) {
-    console.log(error.code);
-  }
-};
+        .then(() => {
+          const user = auth.currentUser;
+          dispatch(
+            authSlice.actions.updateUserProfile({
+              userId: user.uid,
+              nickName: user.displayName,
+              photoURL: user.photoURL,
+            })
+          );
+        })
+        .then(authSignInUser(email, password));
+    } catch (error) {
+      console.log(error.code);
+    }
+  };
 
 export const enterDb = (email, password) => async (dispatch, getState) => {
   try {
