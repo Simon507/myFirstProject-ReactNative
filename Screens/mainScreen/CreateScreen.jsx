@@ -9,7 +9,7 @@ import Locations from '../../assets/components/Locations';
 import { EvilIcons, Feather } from '@expo/vector-icons';
 
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore';
 
 import initialApp from '../../fireBase/config';
 const storage = getStorage(initialApp);
@@ -22,8 +22,9 @@ const CreateScreen = ({ navigation }) => {
   const [locationOpen, setLocationOpen] = useState(false);
   const [lablePhoto, setLablePhoto] = useState('');
   const [focusedName, setFocusedName] = useState(false);
+  const [avatar, setAvatar] = useState(null);
 
-  const { userId, nickName, photoURL } = useSelector(state => state.autorisation);
+  const { userId, nickName } = useSelector(state => state.autorisation);
 
   const onPhotoMake = target => {
     setPhoto(target);
@@ -35,6 +36,16 @@ const CreateScreen = ({ navigation }) => {
   };
 
   const nameHandler = text => setLablePhoto(text);
+
+  const getAvatar = async () => {
+    const querySnapshot = await getDocs(collection(db, `usersPosts/avatars/${nickName}`));
+    const allAvatars = [];
+    querySnapshot.forEach(item => {
+      allAvatars.push({ ...item.data(), id: item.id });
+    });
+    setAvatar(allAvatars[0].photo);
+    // setPosts(newPosts);
+  };
 
   const getPhotoToUpload = async () => {
     const response = await fetch(photo);
@@ -71,7 +82,7 @@ const CreateScreen = ({ navigation }) => {
         nickName,
         lablePhoto,
         photo,
-        // location: location.coords,
+        avatar,
         location,
       });
       console.log('Document written with ID: ', docRef.id);
@@ -83,6 +94,9 @@ const CreateScreen = ({ navigation }) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      getAvatar();
+      console.log(nickName);
+      console.log(avatar);
       setCameraOpen(false);
       setPhoto(null);
       setLocationOpen(false);

@@ -14,7 +14,7 @@ const db = getFirestore(initialApp);
 
 const PostScreen = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
-  const [avatars, setAvatars] = useState([]);
+
   const value = useSelector(state => state.autorisation);
   const dispatch = useDispatch();
 
@@ -27,22 +27,9 @@ const PostScreen = ({ route, navigation }) => {
     setPosts(newPosts);
   };
 
-  const getAllAvatars = async () => {
-    const querySnapshot = await getDocs(collection(db, 'usersPosts/avatars/Sartre'));
-    const allAvatars = [];
-    querySnapshot.forEach(item => {
-      allAvatars.push({ ...item.data(), id: item.id });
-    });
-    console.log(allAvatars);
-    // setPosts(newPosts);
-  };
-
-  // const signOutDb = () => {};
-
   useFocusEffect(
     React.useCallback(() => {
       getAllPost();
-      getAllAvatars();
     }, [route])
   );
 

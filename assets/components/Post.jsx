@@ -3,6 +3,8 @@ import { Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icon
 import React from 'react';
 
 export const Posts = ({ post, navigation }) => {
+  console.log(post);
+
   let date = new Date(post.location.timestamp);
   let dd = date.getDate(date);
   let mm = date.getMonth(date) + 1;
@@ -16,6 +18,10 @@ export const Posts = ({ post, navigation }) => {
       />
       <View style={styles.userPost}>
         <Text style={{ color: '#007aff', fontSize: 15, fontWeight: 500 }}>{post.nickName}</Text>
+        <Image
+          source={{ uri: post.avatar }}
+          style={{ width: 100, height: 100, borderRadius: 10, marginBottom: 5 }}
+        />
         <Text style={{ fontSize: 15, fontWeight: 700 }}>{post.lablePhoto}</Text>
         <TouchableOpacity
           style={styles.button}
