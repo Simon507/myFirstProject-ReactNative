@@ -39,7 +39,7 @@ const PostScreen = ({ route, navigation }) => {
         <Text style={{ fontSize: 17, fontWeight: 700 }}> Привет, {value.nickName} </Text>
         <Button
           style={styles.exitButton}
-          title="EXIT"
+          title="ВЫХОД"
           onPress={() => {
             dispatch(exitDb());
           }}
@@ -48,6 +48,7 @@ const PostScreen = ({ route, navigation }) => {
 
       <FlatList
         data={posts}
+        extraData={posts}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <Posts post={item} navigation={navigation} />}
       />

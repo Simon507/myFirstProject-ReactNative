@@ -16,31 +16,31 @@ export const UserPosts = ({ post, navigation }) => {
       />
       <View style={styles.userPost}>
         <Text style={{ fontSize: 15, fontWeight: 700 }}>{post.lablePhoto}</Text>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.button}
-          //   style={styles.textContainer}
+            style={styles.textContainer}
           onPress={() => navigation.navigate('MapScreen', { location: post.location })}
         >
           <Ionicons name="location-sharp" size={24} color="#FF6C00" />
           <Text>Место фото</Text>
-          {/* <Text>{post.country},</Text>
-        <Text>{post.city}</Text> */}
-          {/* <FontAwesome name="hand-o-left" size={20} color="#BDBDBD" /> */}
+          <Text>{post.country},</Text>
+        <Text>{post.city}</Text>
+          <FontAwesome name="hand-o-left" size={20} color="#BDBDBD" />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          //   style={styles.textContainer}
+            style={styles.textContainer}
           onPress={() =>
             navigation.navigate('CommentsScreenPosts', {
-              // postId: post.id,
-              // uri: post.photo,
+              postId: post.id,
+              uri: post.photo,
             })
           }
         >
           <MaterialCommunityIcons name="comment-processing-outline" size={24} color="#FF6C00" />
           <Text>Комментарии</Text>
-          {/* <FontAwesome name="hand-o-left" size={20} color="#BDBDBD" /> */}
-        </TouchableOpacity>
+          <FontAwesome name="hand-o-left" size={20} color="#BDBDBD" />
+        </TouchableOpacity> */}
         <Text>Дата фото</Text>
         <Text>{`${dd}/${mm}/${yy}`}</Text>
       </View>

@@ -3,7 +3,7 @@ import { Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icon
 import React from 'react';
 
 export const Posts = ({ post, navigation }) => {
-  console.log(post);
+  // console.log(post);
 
   let date = new Date(post.location.timestamp);
   let dd = date.getDate(date);
@@ -14,15 +14,13 @@ export const Posts = ({ post, navigation }) => {
     <View style={styles.container}>
       <Image
         source={{ uri: post.photo }}
-        style={{ width: 200, height: 200, borderRadius: 10, marginBottom: 5 }}
+        style={{ width: 300, height: 200, borderRadius: 10, marginBottom: 5 }}
       />
-      <View style={styles.userPost}>
-        <Text style={{ color: '#007aff', fontSize: 15, fontWeight: 500 }}>{post.nickName}</Text>
-        <Image
-          source={{ uri: post.avatar }}
-          style={{ width: 100, height: 100, borderRadius: 10, marginBottom: 5 }}
-        />
-        <Text style={{ fontSize: 15, fontWeight: 700 }}>{post.lablePhoto}</Text>
+
+      <Text style={{ fontSize: 20, fontWeight: 700, marginBottom: 5 }}>{post.lablePhoto}</Text>
+      <Text style={{ marginBottom: 5 }}>Дата фото: {`${dd}/${mm}/${yy}`}</Text>
+
+      <View style={{ display: 'flex', flexDirection: 'row', gap: 30 }}>
         <TouchableOpacity
           style={styles.button}
           //   style={styles.textContainer}
@@ -37,19 +35,25 @@ export const Posts = ({ post, navigation }) => {
         <TouchableOpacity
           style={styles.button}
           //   style={styles.textContainer}
-          onPress={() =>
+          onPress={() => {
+            // console.log(post.photo);
             navigation.navigate('CommentsScreenPosts', {
-              // postId: post.id,
-              // uri: post.photo,
-            })
-          }
+              postId: post.id,
+              photo: post.photo,
+            });
+          }}
         >
           <MaterialCommunityIcons name="comment-processing-outline" size={24} color="#FF6C00" />
           <Text>Комментарии</Text>
           {/* <FontAwesome name="hand-o-left" size={20} color="#BDBDBD" /> */}
         </TouchableOpacity>
-        <Text>Дата фото</Text>
-        <Text>{`${dd}/${mm}/${yy}`}</Text>
+      </View>
+      <View style={styles.userPost}>
+        <Image
+          source={{ uri: post.avatar }}
+          style={{ width: 40, height: 40, borderRadius: 5, marginBottom: 5 }}
+        />
+        <Text style={{ color: '#007aff', fontSize: 15, fontWeight: 500 }}>{post.nickName}</Text>
       </View>
     </View>
   );
@@ -58,25 +62,21 @@ export const Posts = ({ post, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    marginBottom: 10,
+    paddingVertical: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomColor: '#007aff',
     borderBottomWidth: 1,
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   userPost: {
-    maxWidth: '40%',
-    flexDirection: 'column',
-    gap: 5,
-    marginBottom: 5,
-    marginLeft: 5,
-    zIndex: 100,
-    marginTop: 5,
+    width: '90%',
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 10,
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    marginLeft: 10,
+    alignItems: 'center',
   },
   textContainer: {
     marginTop: 5,
@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
   button: {
     borderWidth: 1,
     borderColor: '#007aff',
-    paddingRight: 3,
-    paddingLeft: 3,
+    padding: 5,
     borderRadius: 6,
+    flexDirection: 'row',
   },
 });
