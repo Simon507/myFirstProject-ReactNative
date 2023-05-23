@@ -8,7 +8,6 @@ import { Posts } from '../../assets/components/Post';
 import { Text, View, StyleSheet, Button, FlatList } from 'react-native';
 
 import { exitDb } from '../../redux/autorisation/authOperations';
-// import { authSignOut } from '../../redux/autorisation/authOperations';
 
 const db = getFirestore(initialApp);
 

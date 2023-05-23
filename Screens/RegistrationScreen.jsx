@@ -39,23 +39,14 @@ const initialState = {
 };
 
 export default function RegistrationScreen({ navigation }) {
-  // const [name, setName] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-
   const [inputValue, setInputValue] = useState(initialState);
   const [image, setImage] = useState(null);
 
   const [permission, requestPermission] = ImagePicker.useMediaLibraryPermissions();
-  // const [userPhotoUrl, setUserPhotoUrl] = useState(null);
 
   const [focusedName, setFocusedName] = useState(false);
   const [focusedEmail, setFocusedEmail] = useState(false);
   const [focusedPass, setFocusedPass] = useState(false);
-
-  // const nameHandler = text => setName(text);
-  // const emailHandler = text => setEmail(text);
-  // const passwordHandler = text => setPassword(text);
 
   const dispatch = useDispatch();
 
@@ -101,18 +92,12 @@ export default function RegistrationScreen({ navigation }) {
       }));
 
       setImage(result.assets[0].uri);
-
-      //zapis on firebase
     }
   };
-
-  ///111111111111111111111111111
 
   const getPhotoToUpload = async photo => {
     const response = await fetch(photo);
     const file = await response.blob();
-    // const uniquePostId = Date.now().toString();
-    // console.log(storage);
 
     const storageRef = ref(storage, `usersPosts/images/avatars/${inputValue.nickName}.jpg`);
 
@@ -148,8 +133,6 @@ export default function RegistrationScreen({ navigation }) {
       throw e;
     }
   };
-
-  //222222222222222222222222222
 
   const onSubmit = () => {
     if (!inputValue.nickName || !inputValue.email || !inputValue.password || !inputValue.photoURL) {
