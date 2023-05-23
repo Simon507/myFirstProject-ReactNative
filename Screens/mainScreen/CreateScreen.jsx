@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Text,
@@ -53,14 +53,12 @@ const CreateScreen = ({ navigation }) => {
       allAvatars.push({ ...item.data(), id: item.id });
     });
     setAvatar(allAvatars[0].photo);
-    // setPosts(newPosts);
   };
 
   const getPhotoToUpload = async () => {
     const response = await fetch(photo);
     const file = await response.blob();
     const uniquePostId = Date.now().toString();
-    // console.log(storage);
 
     const storageRef = ref(storage, `usersPosts/images/${uniquePostId}.jpg`);
 
@@ -129,12 +127,7 @@ const CreateScreen = ({ navigation }) => {
         >
           <EvilIcons name="camera" size={60} color="#969090" />
         </TouchableOpacity>
-        {cameraOpen && (
-          <CameraComponent
-            // style={styles.cameraComponent}
-            onPhotoMake={onPhotoMake}
-          ></CameraComponent>
-        )}
+        {cameraOpen && <CameraComponent onPhotoMake={onPhotoMake}></CameraComponent>}
         {photo && (
           <Image
             source={{ uri: photo }}
@@ -198,7 +191,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: '90%',
     height: '30%',
-    // alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
     marginTop: 20,
@@ -209,11 +201,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: '90%',
     height: '70%',
-    // alignItems: 'center',
-    // justifyContent: 'center',
     overflow: 'hidden',
   },
-  // cameraComponent: { width: 50, height: 100 },
+
   cameraButton: {
     position: 'absolute',
     zIndex: 300,
@@ -242,7 +232,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 15,
     paddingVertical: 10,
-
     fontFamily: 'MerriweatherRegular',
     marginHorizontal: 5,
   },
@@ -255,7 +244,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: '90%',
     height: '25%',
-    // alignItems: 'center',
     justifyContent: 'center',
   },
   mapButton: {
@@ -268,7 +256,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#969090',
     borderRadius: 50,
-    // alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
   },

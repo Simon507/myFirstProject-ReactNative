@@ -1,10 +1,8 @@
 import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
-import { Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 
 export const Posts = ({ post, navigation }) => {
-  // console.log(post);
-
   let date = new Date(post.location.timestamp);
   let dd = date.getDate(date);
   let mm = date.getMonth(date) + 1;
@@ -23,20 +21,14 @@ export const Posts = ({ post, navigation }) => {
       <View style={{ display: 'flex', flexDirection: 'row', gap: 30 }}>
         <TouchableOpacity
           style={styles.button}
-          //   style={styles.textContainer}
           onPress={() => navigation.navigate('MapScreen', { location: post.location })}
         >
           <Ionicons name="location-sharp" size={24} color="#FF6C00" />
           <Text>Место фото</Text>
-          {/* <Text>{post.country},</Text>
-        <Text>{post.city}</Text> */}
-          {/* <FontAwesome name="hand-o-left" size={20} color="#BDBDBD" /> */}
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          //   style={styles.textContainer}
           onPress={() => {
-            // console.log(post.photo);
             navigation.navigate('CommentsScreenPosts', {
               postId: post.id,
               photo: post.photo,
@@ -45,7 +37,6 @@ export const Posts = ({ post, navigation }) => {
         >
           <MaterialCommunityIcons name="comment-processing-outline" size={24} color="#FF6C00" />
           <Text>Комментарии</Text>
-          {/* <FontAwesome name="hand-o-left" size={20} color="#BDBDBD" /> */}
         </TouchableOpacity>
       </View>
       <View style={styles.userPost}>

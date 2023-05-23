@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-// import { AppLoading } from 'expo';
 import { enterDb } from '../redux/autorisation/authOperations';
-// import * as Font from 'expo-font';
+
 import { useDispatch } from 'react-redux';
 
 import {
@@ -33,8 +32,6 @@ export default function LoginScreen({ navigation }) {
   const onLogin = () => {
     Keyboard.dismiss();
     dispatch(enterDb(email, password));
-
-    // console.log('Введено', `${email} + ${password}`);
   };
 
   return (
@@ -86,8 +83,6 @@ const styles = StyleSheet.create({
 
   form: {
     paddingVertical: 40,
-    // paddingTop: 32,
-    // paddingBottom: 100,
     paddingHorizontal: 30,
     width: '100%',
     flex: 0.6,
@@ -141,7 +136,6 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     fontSize: 16,
     lineHeight: 19,
-    // textAlign: 'center',
     color: '#01050a',
     fontFamily: 'MerriweatherRegular',
   },
@@ -151,8 +145,5 @@ const styles = StyleSheet.create({
     color: '#1061c5',
     fontFamily: 'MerriweatherRegular',
     textDecorationLine: 'underline',
-    // textDecorationLine: 'underline',
-    // textAlign: 'center',
-    // fontFamily: 'MerriweatherRegular',
   },
 });

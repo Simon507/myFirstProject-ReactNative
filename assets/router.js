@@ -34,15 +34,13 @@ const UseRoute = isAutorisation => {
     );
   }
 
-  //   screenOptions={{ tabBarShowLabel: false }}  ==  можно вставить в табюнавигатор чтоб скрыть метки
-
   return (
     <Tab.Navigator>
       <Tab.Screen
         options={{
           headerShown: false,
           tabBarLabel: 'Все посты',
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ color, size }) => {
             return <AntDesign name="appstore-o" size={size} color={color} />;
           },
         }}
@@ -52,9 +50,8 @@ const UseRoute = isAutorisation => {
       <Tab.Screen
         options={{
           headerShown: false,
-          // headerBackTitleVisible: false,
           tabBarLabel: 'Добавить пост',
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ color, size }) => {
             return <MaterialCommunityIcons name="tooltip-plus-outline" size={size} color={color} />;
           },
         }}
@@ -65,7 +62,7 @@ const UseRoute = isAutorisation => {
         options={{
           headerShown: false,
           tabBarLabel: 'Профиль',
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ color, size }) => {
             return <Fontisto name="person" size={size} color={color} />;
           },
         }}

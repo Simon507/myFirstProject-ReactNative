@@ -1,7 +1,6 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
-// import { moduleName } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useCallback } from 'react';
@@ -13,15 +12,8 @@ import UseRoute from '../router';
 
 import { StatusState } from '../../redux/autorisation/authOperations';
 
-import { auth } from '../../fireBase/config';
-import { onAuthStateChanged } from 'firebase/auth';
-
 const Main = () => {
-  //   const [userId, setUserId] = useState(null);
-
   const stateChange = useSelector(state => state);
-  //   console.log(stateChange);
-  //   console.log(stateChange.autorisation.stateChange);
 
   const dispatch = useDispatch();
 
@@ -44,11 +36,6 @@ const Main = () => {
   }
 
   const route = JSON.parse(stateChange.autorisation.stateChange);
-  // console.log(route);
-
-  //   if (route === 'false') {
-  //     console.log(`asdad`);
-  //   }
 
   const routing = UseRoute(route);
 

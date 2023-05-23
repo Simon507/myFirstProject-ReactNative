@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { moduleName } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import DefaultScreen from '../nestedScreens/DefaultScreen';
@@ -24,7 +23,6 @@ const PostsScreen = () => {
         component={CommentsScreenPosts}
         options={{
           headerTitle: 'Ко всем постам',
-          // headerShown: false,
         }}
       />
       <NectedScreen.Screen
@@ -32,7 +30,6 @@ const PostsScreen = () => {
         component={MapScreen}
         options={{
           headerTitle: 'Ко всем постам',
-          // headerShown: false,
         }}
       />
     </NectedScreen.Navigator>

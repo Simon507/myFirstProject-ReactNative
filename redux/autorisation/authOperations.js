@@ -1,7 +1,6 @@
 import { initialApp } from '../../fireBase/config';
 
 import { authSlice } from '../autorisation/authReducer';
-// import { useDispatch } from 'react-redux';
 
 import {
   getAuth,
@@ -55,7 +54,6 @@ export const StatusState = () => async (dispatch, getState) => {
       const userUpdateProfile = {
         userId: user.uid,
         nickName: user.displayName,
-        // photoURL: user.photoURL,
       };
 
       dispatch(authSlice.actions.authStateChange({ stateChange: true }));

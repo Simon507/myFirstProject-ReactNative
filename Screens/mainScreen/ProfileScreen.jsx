@@ -14,10 +14,7 @@ const db = getFirestore(initialApp);
 const ProfileScreen = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [avatar, setAvatar] = useState(null);
-  const dispatch = useDispatch();
   const { userId, nickName } = useSelector(state => state.autorisation);
-
-  // console.log(photoURL);
 
   const getUserPosts = async () => {
     const q = query(collection(db, 'usersPosts'), where('userId', '==', userId));
@@ -31,16 +28,12 @@ const ProfileScreen = () => {
 
   const getAvatar = async () => {
     const querySnapshot = await getDocs(collection(db, `usersPosts/avatars/${nickName}`));
-    // const q = query(collection(db, `usersPosts/avatars/${nickName}`));
-    // console.log(q.path);
 
     const avatar = [];
     querySnapshot.forEach(item => {
       avatar.push({ ...item.data(), id: item.id });
     });
 
-    // console.log(querySnapshot.item.data);
-    // const avatar = await getDocs(q);
     if (avatar.length == 0) {
       return;
     }
