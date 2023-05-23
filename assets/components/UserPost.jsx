@@ -1,8 +1,7 @@
-import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
-import { Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { View, StyleSheet, Image, Text } from 'react-native';
 import React from 'react';
 
-export const UserPosts = ({ post, navigation }) => {
+export const UserPosts = ({ post }) => {
   let date = new Date(post.location.timestamp);
   let dd = date.getDate(date);
   let mm = date.getMonth(date) + 1;
@@ -10,39 +9,13 @@ export const UserPosts = ({ post, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: post.photo }}
-        style={{ width: 200, height: 200, borderRadius: 10, marginBottom: 5 }}
-      />
+      <Image style={styles.image} source={{ uri: post.photo }} />
       <View style={styles.userPost}>
         <Text style={{ fontSize: 15, fontWeight: 700 }}>{post.lablePhoto}</Text>
-        {/* <TouchableOpacity
-          style={styles.button}
-            style={styles.textContainer}
-          onPress={() => navigation.navigate('MapScreen', { location: post.location })}
-        >
-          <Ionicons name="location-sharp" size={24} color="#FF6C00" />
-          <Text>Место фото</Text>
-          <Text>{post.country},</Text>
-        <Text>{post.city}</Text>
-          <FontAwesome name="hand-o-left" size={20} color="#BDBDBD" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-            style={styles.textContainer}
-          onPress={() =>
-            navigation.navigate('CommentsScreenPosts', {
-              postId: post.id,
-              uri: post.photo,
-            })
-          }
-        >
-          <MaterialCommunityIcons name="comment-processing-outline" size={24} color="#FF6C00" />
-          <Text>Комментарии</Text>
-          <FontAwesome name="hand-o-left" size={20} color="#BDBDBD" />
-        </TouchableOpacity> */}
-        <Text>Дата фото</Text>
-        <Text>{`${dd}/${mm}/${yy}`}</Text>
+        <View style={styles.textContainer}>
+          <Text>Дата фото:</Text>
+          <Text>{`${dd}/${mm}/${yy}`}</Text>
+        </View>
       </View>
     </View>
   );
@@ -61,26 +34,20 @@ const styles = StyleSheet.create({
   userPost: {
     flexDirection: 'column',
     gap: 5,
-    marginBottom: 5,
-    marginLeft: 5,
-    zIndex: 100,
     marginTop: 5,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     marginLeft: 10,
   },
-  textContainer: {
-    marginTop: 5,
+  image: {
+    width: 300,
+    height: 200,
+    borderRadius: 10,
     marginBottom: 5,
-    marginHorizontal: 10,
+  },
+  textContainer: {
+    marginBottom: 5,
     flexDirection: 'row',
     gap: 5,
-  },
-  button: {
-    borderWidth: 1,
-    borderColor: '#add1db',
-    paddingRight: 3,
-    paddingLeft: 3,
-    borderRadius: 6,
   },
 });

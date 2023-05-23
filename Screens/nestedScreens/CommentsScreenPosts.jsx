@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { useFocusEffect } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
@@ -16,7 +16,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
-  ScrollView,
 } from 'react-native';
 
 import initialApp from '../../fireBase/config';
@@ -42,14 +41,12 @@ const CommentsScreenPosts = item => {
   };
 
   const getAllComments = async target => {
-    // console.log(target);
     const querySnapshot = await getDocs(collection(db, 'usersPosts', target, 'comments'));
     const comments = [];
     querySnapshot.forEach(doc => {
       comments.push({ ...doc.data() });
     });
     setAllComments(comments);
-    // console.log(comments);
   };
 
   const addCommentById = async comment => {
@@ -76,50 +73,28 @@ const CommentsScreenPosts = item => {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log(item);
-
       const targetPost = item.route.params.postId;
       const photo = item.route.params.photo;
 
       setTargetPostId(targetPost);
       setPhoto(photo);
       getAllComments(targetPost);
-
-      // findPost(targetPost);
     }, [])
   );
 
-  // const from = 'PostScreen';
-  // useEffect(() => {
-  //   console.log(`зщыеы`);
-  // }, []);
-
-  // navigation.navigate('Cren', from);
-
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        {photo && <Image style={styles.image} source={{ uri: photo }} />}
-        <View style={styles.commentsBlock}>
-          {
-            allComents && (
-              <FlatList
-                contentContainerStyle={{ flexGrow: 1 }}
-                style={styles.commentsList}
-                data={allComents}
-                renderItem={({ item }) => <Item title={item.fullComment} />}
-                // keyExtractor={item => item.comment}
-              />
-            )
-
-            // <FlatList
-            //   data={allComents}
-            //   keyExtractor={(item) => index.toString()}
-            //   renderItem={({ item }) => <Posts post={item} navigation={navigation} />}
-            // />
-          }
-        </View>
-
+    <View style={styles.container}>
+      {photo && <Image style={styles.image} source={{ uri: photo }} />}
+      <View style={styles.commentsBlock}>
+        {allComents && (
+          <FlatList
+            style={styles.commentsList}
+            data={allComents}
+            renderItem={({ item }) => <Item title={item.fullComment} />}
+          />
+        )}
+      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.editCommentBlock}>
           <TextInput
             multiline
@@ -130,17 +105,17 @@ const CommentsScreenPosts = item => {
             onBlur={() => setFocusedName(false)}
             style={{ ...styles.input, borderColor: focusedName ? '#430fdf' : '#0fb5df' }}
           />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              addCommentById(comment);
+            }}
+          >
+            <Text style={styles.buttonTxt}>Опубликовать</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            addCommentById(comment);
-          }}
-        >
-          <Text style={styles.buttonTxt}>Опубликовать</Text>
-        </TouchableOpacity>
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </View>
   );
 };
 
@@ -159,7 +134,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 10,
   },
-  commentsList: {},
+  commentsList: { flex: 1 },
   image: {
     width: 300,
     height: 200,
@@ -168,7 +143,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   item: {
-    // backgroundColor: '#d80bef',
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -180,7 +154,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   editCommentBlock: {
-    // flex: 0.2,
     width: '100%',
     paddingTop: 15,
   },
@@ -193,11 +166,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   button: {
+    maxWidth: '40%',
     backgroundColor: '#FF6C00',
     marginTop: 20,
     marginBottom: 40,
     borderRadius: 100,
     alignItems: 'center',
+    alignSelf: 'center',
     padding: 10,
   },
   buttonTxt: { color: '#fff' },

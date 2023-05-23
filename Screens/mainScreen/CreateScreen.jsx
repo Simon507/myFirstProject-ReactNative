@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Text, View, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  TextInput,
+  Image,
+} from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -86,6 +95,7 @@ const CreateScreen = ({ navigation }) => {
         location,
       });
       console.log('Document written with ID: ', docRef.id);
+      navigation.navigate('DefaultScreen');
     } catch (e) {
       console.error('Error adding document: ', e);
       throw e;
@@ -95,8 +105,6 @@ const CreateScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       getAvatar();
-      console.log(nickName);
-      console.log(avatar);
       setCameraOpen(false);
       setPhoto(null);
       setLocationOpen(false);
@@ -121,7 +129,12 @@ const CreateScreen = ({ navigation }) => {
         >
           <EvilIcons name="camera" size={60} color="#969090" />
         </TouchableOpacity>
-        {cameraOpen && <CameraComponent onPhotoMake={onPhotoMake}></CameraComponent>}
+        {cameraOpen && (
+          <CameraComponent
+            // style={styles.cameraComponent}
+            onPhotoMake={onPhotoMake}
+          ></CameraComponent>
+        )}
         {photo && (
           <Image
             source={{ uri: photo }}
@@ -130,17 +143,20 @@ const CreateScreen = ({ navigation }) => {
         )}
       </View>
 
-      <View style={styles.nameContainer}>
-        <Text>Введите название фото</Text>
-        <TextInput
-          value={lablePhoto}
-          onChangeText={nameHandler}
-          placeholder="Название фото"
-          onFocus={() => setFocusedName(true)}
-          onBlur={() => setFocusedName(false)}
-          style={{ ...styles.input, borderColor: focusedName ? '#430fdf' : '#0fb5df' }}
-        />
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.nameContainer}>
+          <Text>Введите название фото</Text>
+          <TextInput
+            value={lablePhoto}
+            onChangeText={nameHandler}
+            placeholder="Название фото"
+            onFocus={() => setFocusedName(true)}
+            onBlur={() => setFocusedName(false)}
+            style={{ ...styles.input, borderColor: focusedName ? '#430fdf' : '#0fb5df' }}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+
       <View style={styles.locationContainer}>
         <Text>Место создания фото</Text>
 
@@ -168,24 +184,14 @@ const CreateScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', paddingVertical: 50 },
-  headerTitle: { fontSize: 30, fontStyle: 'italic' },
-  // createButton: {
-  //   backgroundColor: '#FF6C00',
-  //   marginTop: 20,
-  //   marginBottom: 40,
-  //   borderRadius: 100,
-  //   alignItems: 'center',
-  //   padding: 10,
-  // },
-  // backButton: {
-  //   backgroundColor: '#FF6C00',
-  //   marginTop: 20,
-  //   marginBottom: 40,
-  //   borderRadius: 100,
-  //   alignItems: 'center',
-  //   padding: 10,
-  // },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 50,
+    backgroundColor: '#edf7fa',
+    gap: 20,
+  },
+  headerTitle: { fontSize: 30 },
   cameraContainer: {
     borderWidth: 1,
     borderColor: '000',
@@ -195,6 +201,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
+    marginTop: 20,
   },
   cameraContainerOpen: {
     borderWidth: 1,
@@ -203,9 +210,10 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '70%',
     // alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     overflow: 'hidden',
   },
+  // cameraComponent: { width: 50, height: 100 },
   cameraButton: {
     position: 'absolute',
     zIndex: 300,

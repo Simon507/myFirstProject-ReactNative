@@ -62,7 +62,7 @@ const ProfileScreen = () => {
             {avatar ? (
               <ImageBackground style={styles.avatarImage} source={{ uri: avatar }} />
             ) : (
-              <View style={styles.avatarAddBtn}>
+              <View>
                 <Text
                   style={{
                     color: '#0fb5df',
@@ -76,6 +76,7 @@ const ProfileScreen = () => {
           <Text style={{ color: '#007aff', fontSize: 30, fontWeight: 500 }}>{nickName}</Text>
           <FlatList
             data={userPosts}
+            style={styles.userPostsList}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => <UserPosts post={item} />}
           />
@@ -124,6 +125,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#edf7fa',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+  },
+  userPostsList: {
+    display: 'flex',
+    gap: 15,
   },
 });
 
