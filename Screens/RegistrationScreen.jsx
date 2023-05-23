@@ -32,10 +32,10 @@ const storage = getStorage(initialApp);
 const db = getFirestore(initialApp);
 
 const initialState = {
-  email: '',
-  password: '',
-  nickName: '',
-  photoURL: '',
+  email: null,
+  password: null,
+  nickName: null,
+  photoURL: null,
 };
 
 export default function RegistrationScreen({ navigation }) {
@@ -127,6 +127,7 @@ export default function RegistrationScreen({ navigation }) {
       error => {
         console.log('Error uloading image:', error);
       },
+
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
           console.log('File aviable at', downloadURL);

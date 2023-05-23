@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 
@@ -20,7 +20,6 @@ const Locations = ({ onLocationMake }) => {
       };
       setLocation(coords);
       onLocationMake(location);
-      // console.log(coords);
     })();
   }, []);
 
@@ -49,9 +48,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   mapStyle: {
-    // position: 'absolute',
-    // top: '-250%',
-    // left: '-100%',
     width: '100%',
     height: '100%',
   },

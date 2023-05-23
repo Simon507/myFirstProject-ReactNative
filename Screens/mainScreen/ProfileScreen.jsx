@@ -39,11 +39,11 @@ const ProfileScreen = () => {
       avatar.push({ ...item.data(), id: item.id });
     });
 
-    // console.log(avatar[0].photo);
-
     // console.log(querySnapshot.item.data);
     // const avatar = await getDocs(q);
-
+    if (avatar.length == 0) {
+      return;
+    }
     setAvatar(avatar[0].photo);
   };
 
@@ -73,7 +73,7 @@ const ProfileScreen = () => {
               </View>
             )}
           </View>
-          <Text style={{ color: '#007aff', fontSize: 30, fontWeight: 500 }}>{nickName}</Text>
+          <Text style={styles.avatarName}>{nickName}</Text>
           <FlatList
             data={userPosts}
             style={styles.userPostsList}
@@ -99,6 +99,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
+  },
+  avatarName: {
+    fontSize: 20,
+    fontWeight: 500,
+    position: 'absolute',
+    top: -90,
+    left: '35%',
   },
   userAvatar: {
     backgroundColor: '#F6F6F6',
@@ -127,6 +134,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
   },
   userPostsList: {
+    marginTop: 70,
     display: 'flex',
     gap: 15,
   },
